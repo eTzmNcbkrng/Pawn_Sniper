@@ -1,0 +1,9 @@
+## Title: Pawn Sniper Weights
+## Notes: Pawn Class Weights
+## Version: v1.0.0
+## Interface: 11302
+## Author: PrivateSniper
+## Dependencies: Pawn
+## DefaultState: Enabled
+
+main.lua
