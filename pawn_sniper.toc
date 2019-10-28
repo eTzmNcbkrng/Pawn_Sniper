@@ -6,4 +6,20 @@
 ## Dependencies: Pawn
 ## DefaultState: Enabled
 
+# Classes
+classes\mage.lua
+classes\priest.lua
+classes\warlock.lua
+
+classes\rogue.lua
+classes\druid.lua
+
+classes\hunter.lua
+classes\shaman.lua
+
+classes\warrior.lua
+classes\paladin.lua
+
+
+# Load
 main.lua

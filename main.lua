@@ -3,12 +3,14 @@
 -- © 2006-2019 Green Eclipse.  This mod is released under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 license.
 -- See Readme.htm for more information.
 --
--- Ask Mr. Robot scales
+-- PrivateSniper's Classic Pawn Scales
 ------------------------------------------------------------
+
+local AddonName, AddonTable = ...
 
 local ScaleProviderName = "SniperClassic"
 
-PawnMrRobotLastUpdatedVersion = 2.0245
+PawnSniperLastUpdatedVersion = 1.00
 
 local SniperUnitClasses = {
     [1] = {
@@ -21,8 +23,14 @@ local SniperUnitClasses = {
     },
     -- [2] = {
     -- },
-    -- [3] = {
-    -- },
+    [3] = {
+      ['name'] = "Hunter",
+        ['spec'] = {
+            [1] = 'Beast Mastery',
+            [2] = 'Marksmanship',
+            [3] = 'Survival'
+        }
+    },
     -- [4] = {
     -- },
     -- [5] = {
@@ -31,8 +39,14 @@ local SniperUnitClasses = {
     -- },
     -- [7] = {
     -- },
-    -- [8] = {
-    -- },
+    [8] = {
+        ['name'] = "Mage",
+        ['spec'] = {
+            [1] = 'Fire',
+            [2] = 'Frost',
+            [3] = 'Arcane'
+        }
+    },
 }
 
 
@@ -40,7 +54,7 @@ function SniperPawnDump(str, obj)
     if ViragDevTool_AddData then
         ViragDevTool_AddData(obj, str)
     end
-  end
+end
 
 
 ------------------------------------------------------------
@@ -87,7 +101,7 @@ function SniperPawnGetStatValuesForTemplate(Template, NoStats)
 end
 
 -- Adds a plugin scale from Pawn, starting from one of Pawn's existing templates.
-function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, SpecID, Stats, NormalizationFactor)
+function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, SpecID, Stats, NormalizationFactor, Color)
 	if not PawnScaleProviders[ProviderInternalName] then
 		VgerCore.Fail("A scale provider with that name is not registered.  Use PawnAddPluginScaleProvider first.")
 		return
@@ -127,7 +141,7 @@ function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, Spe
 		ProviderInternalName,
 		ScaleInternalName,
 		className .. ": " .. specName, -- LocalizedScaleName
-		'ffffff',
+		Color,
 		ScaleValues,
 		NormalizationFactor,
 		Template.HideUpgrades
@@ -147,235 +161,35 @@ end
 -- Start of Stat Weight Scales
 
 
-function PawnMrRobotScaleProvider_AddScales()
+function SniperPawnScaleProvider_AddScales()
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	11, -- Druid
--- 	1, -- Balance
--- 	{ Avoidance=0.03, CritRating=1.79, HasteRating=2.20, Indestructible=0.01, Intellect=1.97, Leech=0.01, MasteryRating=2.14, MovementSpeed=0.02, Versatility=1.62 }
--- )
+    SniperPawnDump('addonTable', AddonTable)
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	11, -- Druid
--- 	2, -- Feral
--- 	{ Agility=1.89, Avoidance=0.02, CritRating=2.15, HasteRating=1.67, Indestructible=0.01, Leech=0.01, MasteryRating=1.91, MaxDamage=1.47, MinDamage=1.47, MovementSpeed=0.03, Versatility=1.60 }
--- )
+    -- Warrior: Protection
+    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 1, 1, AddonTable.warrior["Protection"], nil, AddonTable.warrior['colour'] )
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	11, -- Druid
--- 	3, -- Guardian
--- 	{ Agility=7.85, Armor=27.72, Avoidance=5.96, CritRating=14.08, HasteRating=11.49, Indestructible=0.01, Leech=9.52, MasteryRating=17.48, MaxDamage=4.71, MinDamage=4.71, MovementSpeed=0.01, Stamina=9.83, Versatility=18.72 }
--- )
+    -- Hunter: Marksmanship
+    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 3, 2, AddonTable.hunter["Marksmanship"], nil, AddonTable.hunter['colour'] )
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	11, -- Druid
--- 	4, -- Restoration
--- 	{ Avoidance=0.02, CritRating=3.18, HasteRating=3.42, Indestructible=0.01, Intellect=3.45, Leech=4.31, MasteryRating=3.62, MovementSpeed=0.01, Versatility=3.44 }
--- )
+    ------------------------------------------------------------
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	3, -- Hunter
--- 	1, -- Beast Mastery
--- 	{ Agility=1.95, Avoidance=0.03, CritRating=1.58, HasteRating=1.62, Indestructible=0.01, Leech=0.01, MasteryRating=1.64, MaxDamage=1.06, MinDamage=1.06, MovementSpeed=0.02, Versatility=1.48 }
--- )
+    -- PawnMrRobotScaleProviderOptions.LastAdded keeps track of the last time that we tried to automatically enable scales for this character.
+    if not PawnMrRobotScaleProviderOptions then PawnMrRobotScaleProviderOptions = { } end
+    if not PawnMrRobotScaleProviderOptions.LastAdded then PawnMrRobotScaleProviderOptions.LastAdded = 0 end
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	3, -- Hunter
--- 	2, -- Marksmanship
--- 	{ Agility=1.80, Avoidance=0.03, CritRating=1.53, HasteRating=1.67, Indestructible=0.01, Leech=0.01, MasteryRating=1.82, MaxDamage=1.71, MinDamage=1.71, MovementSpeed=0.02, Versatility=1.41 }
--- )
+    local _, Class = UnitClass("player")
+    if PawnMrRobotScaleProviderOptions.LastClass ~= nil and Class ~= PawnMrRobotScaleProviderOptions.LastClass then
+        -- If the character has changed class since last time, let's start over.
+        PawnSetAllScaleProviderScalesVisible(ScaleProviderName, false)
+        PawnMrRobotScaleProviderOptions.LastAdded = 0
+    end
+    PawnMrRobotScaleProviderOptions.LastClass = Class
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	3, -- Hunter
--- 	3, -- Survival
--- 	{ Agility=1.89, Avoidance=0.02, CritRating=1.63, HasteRating=2.09, Indestructible=0.01, Leech=0.01, MasteryRating=1.33, MaxDamage=1.15, MinDamage=1.15, MovementSpeed=0.03, Versatility=1.53 }
--- )
+    -- These scales are new, and we don't need any upgrade logic yet.
+    PawnMrRobotScaleProviderOptions.LastAdded = 1
 
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	8, -- Mage
--- 	1, -- Arcane
--- 	{ Avoidance=0.03, CritRating=1.76, HasteRating=1.68, Indestructible=0.01, Intellect=1.91, Leech=0.01, MasteryRating=1.45, MovementSpeed=0.02, Versatility=1.58 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	8, -- Mage
--- 	2, -- Fire
--- 	{ Avoidance=0.03, CritRating=1.68, HasteRating=1.71, Indestructible=0.01, Intellect=1.80, Leech=0.01, MasteryRating=1.50, MovementSpeed=0.02, Versatility=1.45 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	8, -- Mage
--- 	3, -- Frost
--- 	{ Avoidance=0.03, CritRating=1.49, HasteRating=1.69, Indestructible=0.01, Intellect=1.76, Leech=0.01, MasteryRating=1.77, MovementSpeed=0.02, Versatility=1.48 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	2, -- Paladin
--- 	1, -- Holy
--- 	{ Avoidance=0.02, CritRating=1.91, HasteRating=0.19, Indestructible=0.01, Intellect=2.36, Leech=1.40, MasteryRating=2.68, MovementSpeed=0.01, Versatility=2.06 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	2, -- Paladin
--- 	2, -- Protection
--- 	{ Armor=17.06, Avoidance=5.51, CritRating=13.12, HasteRating=7.56, Indestructible=0.01, Leech=10.00, MasteryRating=27.19, MaxDamage=11.70, MinDamage=11.70, MovementSpeed=0.01, Stamina=13.28, Strength=7.54, Versatility=19.08 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	2, -- Paladin
--- 	3, -- Retribution
--- 	{ Avoidance=0.02, CritRating=1.53, HasteRating=1.77, Indestructible=0.01, Leech=0.01, MasteryRating=1.60, MaxDamage=1.39, MinDamage=1.39, MovementSpeed=0.03, Strength=1.79, Versatility=1.50 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	5, -- Priest
--- 	1, -- Discipline
--- 	{ Avoidance=0.02, CritRating=2.16, HasteRating=2.71, Indestructible=0.01, Intellect=2.52, Leech=1.30, MasteryRating=1.72, MovementSpeed=0.01, Versatility=2.37 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	5, -- Priest
--- 	2, -- Holy
--- 	{ Avoidance=0.02, CritRating=3.10, HasteRating=0.26, Indestructible=0.01, Intellect=3.52, Leech=3.48, MasteryRating=3.94, MovementSpeed=0.01, Versatility=3.19 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	5, -- Priest
--- 	3, -- Shadow
--- 	{ Avoidance=0.03, CritRating=1.79, HasteRating=2.16, Indestructible=0.01, Intellect=1.81, Leech=0.01, MasteryRating=1.66, MovementSpeed=0.02, Versatility=1.48 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	4, -- Rogue
--- 	1, -- Assassination
--- 	{ Agility=1.76, Avoidance=0.02, CritRating=1.75, HasteRating=1.81, Indestructible=0.01, Leech=0.01, MasteryRating=1.65, MaxDamage=2.45, MinDamage=2.45, MovementSpeed=0.03, Versatility=1.42 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	4, -- Rogue
--- 	2, -- Outlaw
--- 	{ Agility=1.75, Avoidance=0.02, CritRating=1.51, HasteRating=1.47, Indestructible=0.01, Leech=0.01, MasteryRating=1.41, MaxDamage=1.63, MinDamage=1.63, MovementSpeed=0.03, Versatility=1.39 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	4, -- Rogue
--- 	3, -- Subtlety
--- 	{ Agility=1.79, Avoidance=0.02, CritRating=1.57, HasteRating=1.35, Indestructible=0.01, Leech=0.01, MasteryRating=1.41, MaxDamage=2.53, MinDamage=2.53, MovementSpeed=0.03, Versatility=1.43 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	7, -- Shaman
--- 	1, -- Elemental
--- 	{ Avoidance=0.03, CritRating=1.68, HasteRating=1.69, Indestructible=0.01, Intellect=1.80, Leech=0.01, MasteryRating=1.09, MovementSpeed=0.02, Versatility=1.50 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	7, -- Shaman
--- 	2, -- Enhancement
--- 	{ Agility=1.86, Avoidance=0.02, CritRating=1.66, HasteRating=2.00, Indestructible=0.01, Leech=0.01, MasteryRating=1.51, MaxDamage=1.46, MinDamage=1.46, MovementSpeed=0.03, Versatility=1.49 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	7, -- Shaman
--- 	3, -- Restoration
--- 	{ Avoidance=0.02, CritRating=4.28, HasteRating=0.50, Indestructible=0.01, Intellect=3.18, Leech=3.88, MasteryRating=3.27, MovementSpeed=0.01, Versatility=2.96 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	9, -- Warlock
--- 	1, -- Affliction
--- 	{ Avoidance=0.03, CritRating=1.53, HasteRating=1.79, Indestructible=0.01, Intellect=1.70, Leech=0.01, MasteryRating=1.82, MovementSpeed=0.02, Versatility=1.34 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	9, -- Warlock
--- 	2, -- Demonology
--- 	{ Avoidance=0.03, CritRating=1.83, HasteRating=2.06, Indestructible=0.01, Intellect=2.03, Leech=0.01, MasteryRating=2.00, MovementSpeed=0.02, Versatility=1.68 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	9, -- Warlock
--- 	3, -- Destruction
--- 	{ Avoidance=0.03, CritRating=1.73, HasteRating=1.92, Indestructible=0.01, Intellect=1.86, Leech=0.01, MasteryRating=1.80, MovementSpeed=0.02, Versatility=1.52 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	1, -- Warrior
--- 	1, -- Arms
--- 	{ Avoidance=0.02, CritRating=1.74, HasteRating=1.71, Indestructible=0.01, Leech=0.01, MasteryRating=1.40, MaxDamage=1.35, MinDamage=1.35, MovementSpeed=0.03, Strength=1.68, Versatility=1.37 }
--- )
-
--- SniperPawnAddPluginScaleFromTemplate(
--- 	ScaleProviderName,
--- 	1, -- Warrior
--- 	2, -- Fury
--- 	{ Avoidance=0.02, CritRating=1.53, HasteRating=1.89, Indestructible=0.01, Leech=0.01, MasteryRating=1.62, MaxDamage=0.86, MinDamage=0.86, MovementSpeed=0.03, Strength=1.61, Versatility=1.37 }
--- )
-
-SniperPawnAddPluginScaleFromTemplate(
-	ScaleProviderName,
-	1, -- Warrior
-	3, -- Protection
-	{
-        Armor=17.04,
-        CritRating=13.47,
-        HasteRating=15.18,
-        MaxDamage=2.74,
-        MinDamage=2.74,
-        MovementSpeed=0.01,
-        Stamina=15.24,
-        Strength=19.32,
-        Versatility=26.25
-    }
-)
-
-
-
-------------------------------------------------------------
-
--- PawnMrRobotScaleProviderOptions.LastAdded keeps track of the last time that we tried to automatically enable scales for this character.
-if not PawnMrRobotScaleProviderOptions then PawnMrRobotScaleProviderOptions = { } end
-if not PawnMrRobotScaleProviderOptions.LastAdded then PawnMrRobotScaleProviderOptions.LastAdded = 0 end
-
-local _, Class = UnitClass("player")
-if PawnMrRobotScaleProviderOptions.LastClass ~= nil and Class ~= PawnMrRobotScaleProviderOptions.LastClass then
-	-- If the character has changed class since last time, let's start over.
-	PawnSetAllScaleProviderScalesVisible(ScaleProviderName, false)
-	PawnMrRobotScaleProviderOptions.LastAdded = 0
-end
-PawnMrRobotScaleProviderOptions.LastClass = Class
-
--- These scales are new, and we don't need any upgrade logic yet.
-PawnMrRobotScaleProviderOptions.LastAdded = 1
-
--- After this function terminates there's no need for it anymore, so cause it to self-destruct to save memory.
-PawnMrRobotScaleProvider_AddScales = nil
+    -- After this function terminates there's no need for it anymore, so cause it to self-destruct to save memory.
+    PawnMrRobotScaleProvider_AddScales = nil
 
 end -- PawnMrRobotScaleProvider_AddScales
 
@@ -385,5 +199,5 @@ if not VgerCore.IsClassic then
 	-- These scales aren't useful on WoW retail, so skip them.
     PawnMrRobotScaleProvider_AddScales = nil
 else
-    PawnAddPluginScaleProvider(ScaleProviderName, PawnLocal.UI.AskMrRobotProvider, PawnMrRobotScaleProvider_AddScales)
+    PawnAddPluginScaleProvider(ScaleProviderName, 'Pawn Sniper Classic', SniperPawnScaleProvider_AddScales)
 end
