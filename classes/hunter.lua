@@ -11,6 +11,6 @@ AddonTable.hunter = {
     AttackPower=16,
     Stamina=4,
 
-    Armor=0.1
+    Armor=0.01
   }
 }
