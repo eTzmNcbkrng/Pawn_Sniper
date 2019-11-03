@@ -1,7 +1,7 @@
 local AddonName, AddonTable = ...
 
 AddonTable.rogue = {
-  ["colour"] = '2fbe5d', -- TODO: Correct the colour
+  ["colour"] = 'fff569', -- TODO: Correct the colour
   ["Combat"] = {
     Armor=0.01,
     Agility=16,

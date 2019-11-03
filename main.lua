@@ -132,12 +132,7 @@ function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, Spe
 
 	if not PawnCommon then VgerCore.Fail("Can't add plugin scales until Pawn starts to initialize.") return end
 
-    SniperPawnDump('SniperUnitClasses', SniperUnitClasses)
-    SniperPawnDump('SniperUnitClasses ClassId', SniperUnitClasses[ClassID])
-
     local clId = tonumber(ClassID)
-
-    SniperPawnDump('clId', clId)
 
     local className = SniperUnitClasses[tonumber(ClassID)]['name']
     local specName = SniperUnitClasses[tonumber(ClassID)]['spec'][tonumber(SpecID)]
@@ -153,10 +148,6 @@ function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, Spe
 			ScaleValues[StatName] = Stats[StatName]
 		end
 	end
-
-	--local Color = strsub(RAID_CLASS_COLORS[UnlocalizedClassName].colorStr, 3)
-	-- Choose a lighter color for death knights so it's easier to read.
-	-- if ClassID == 6 then Color = "ff4d6b" end
 
 	-- Then, transfer control to the regular plugin scale codepath.
 	local ScaleInternalName = className .. SpecID
@@ -283,6 +274,9 @@ function SniperPawnScaleProvider_AddScales()
 
     -- Rogue: Combat
     SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 4, 2, AddonTable.rogue["Combat"], nil, AddonTable.rogue['colour'] )
+
+    -- Paladin: Holy
+    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 2, 1, AddonTable.paladin["Holy"], nil, AddonTable.paladin['colour'] )
 
     -- Warrior: Protection
     SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 1, 1, AddonTable.warrior["Protection"], nil, AddonTable.warrior['colour'] )
