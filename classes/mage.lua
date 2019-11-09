@@ -1,17 +1,43 @@
 local AddonName, AddonTable = ...
 
+local MageArmor=0.01
+local MageSpellCritRating=4
+local MageStamina=1
+local MageSpirit=2
+local MageIntellect=16
+local MageMp5=8
+local MageWeaponDamage=0.1
+
 AddonTable.mage = {
-    -- ["Protection"] = {
-    --     Armor=0.1,
-    --     Agility=1,
-    --     CritRating=1,
-    --     AttackPower=2,
-    --     Hit=10,
-    --     Stamina=6,
-    --     Strength=4,
-    --     Defense=2,
-    --     Dodge=1,
-    --     Parry=1,
-    --     Hp5=4
-    -- }
+  ["colour"] = '69ccf0',
+  ["Arcane"] = {
+    Armor=MageArmor,
+    SpellCritRating=MageSpellCritRating,
+    Stamina=MageStamina,
+    Spirit=MageSpirit,
+    Intellect=MageIntellect,
+    Mp5=MageMp5,
+    Dps=MageWeaponDamage,
+    RangedDps=MageWeaponDamage
+  },
+  ["Fire"] = {
+    Armor=MageArmor,
+    SpellCritRating=MageSpellCritRating,
+    Stamina=MageStamina,
+    Spirit=MageSpirit,
+    Intellect=MageIntellect,
+    Mp5=MageMp5,
+    Dps=MageWeaponDamage,
+    RangedDps=MageWeaponDamage
+  },
+  ["Frost"] = {
+    Armor=MageArmor,
+    SpellCritRating=MageSpellCritRating,
+    Stamina=MageStamina,
+    Spirit=MageSpirit,
+    Intellect=MageIntellect,
+    Mp5=MageMp5,
+    Dps=MageWeaponDamage,
+    RangedDps=MageWeaponDamage
+  }
 }

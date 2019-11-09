@@ -19,52 +19,78 @@ local PawnEnchantedAnnotationFormat = PawnUnenchantedAnnotationFormat .. "  %s(%
 -- The class of the player
 -- UnitClass("player")
 local SniperUnitClasses = {
-    [1] = {
-      ['name'] = "Warrior",
-      ['spec'] = {
-        [1] = 'Protection',
-        [2] = 'Arms',
-        [3] = 'Fury'
-      }
-    },
-    [2] = {
-      ['name'] = "Paladin",
-      ['spec'] = { -- Confirmed
-        [1] = 'Holy',
-        [2] = 'Protection',
-        [3] = 'Retribution',
-      }
-    },
-    [3] = {
-      ['name'] = "Hunter",
-      ['spec'] = { -- Confirmed
-        [1] = 'Beast Mastery',
-        [2] = 'Marksmanship',
-        [3] = 'Survival'
-      }
-    },
-    [4] = { -- Confirmed
-      ['name'] = "Rogue",
-      ['spec'] = {
-        [1] = 'Assassination',
-        [2] = 'Combat',
-        [3] = 'Subtelty'
-      }
-    },
-    -- [5] = {
-    -- },
-    -- [6] = {
-    -- },
-    -- [7] = {
-    -- },
-    [8] = {
-        ['name'] = "Mage",
-        ['spec'] = {
-            [1] = 'Fire',
-            [2] = 'Frost',
-            [3] = 'Arcane'
-        }
-    },
+  [1] = {
+    ['name'] = "Warrior",
+    ['spec'] = {
+      [1] = 'Protection',
+      [2] = 'Arms',
+      [3] = 'Fury'
+    }
+  },
+  [2] = {
+    ['name'] = "Paladin",
+    ['spec'] = {
+      [1] = 'Holy',
+      [2] = 'Protection',
+      [3] = 'Retribution',
+    }
+  },
+  [3] = {
+    ['name'] = "Hunter",
+    ['spec'] = {
+      [1] = 'Beast Mastery',
+      [2] = 'Marksmanship',
+      [3] = 'Survival'
+    }
+  },
+  [4] = {
+    ['name'] = "Rogue",
+    ['spec'] = {
+      [1] = 'Assassination',
+      [2] = 'Combat',
+      [3] = 'Subtelty'
+    }
+  },
+  [5] = {
+    ['name'] = "Priest",
+    ['spec'] = {
+      [1] = 'Discipline',
+      [2] = 'Holy',
+      [3] = 'Shadow'
+    }
+  },
+  [7] = {
+    ['name'] = "Shaman",
+    ['spec'] = {
+      [1] = 'Elemental',
+      [2] = 'Enhancement',
+      [3] = 'Restoration'
+    }
+  },
+  [8] = {
+    ['name'] = "Mage",
+    ['spec'] = {
+      [1] = 'Arcane',
+      [2] = 'Fire',
+      [3] = 'Frost'
+    }
+  },
+  [9] = {
+    ['name'] = "Warlock",
+    ['spec'] = {
+      [1] = 'Affliction',
+      [2] = 'Demonology',
+      [3] = 'Destruction'
+    }
+  },
+  [11] = {
+    ['name'] = "Druid",
+    ['spec'] = {
+      [1] = 'Balance',
+      [2] = 'Feral Combat',
+      [3] = 'Restoration'
+    }
+  }
 }
 
 
@@ -220,8 +246,8 @@ function PawnAddValuesToTooltip(Tooltip, ItemValues, UpgradeInfo, BestItemFor, S
 				TooltipText = format(PawnEnchantedAnnotationFormat, TextColor, LocalizedName, tostring(Value), UnenchantedTextColor, tostring(UnenchantedValue))
 			elseif Value and Value > 0 then
 				TooltipText = format(PawnUnenchantedAnnotationFormat, TextColor, LocalizedName, tostring(Value))
-			elseif UnenchantedValue and UnenchantedValue > 0 then
-				TooltipText = format(PawnUnenchantedAnnotationFormat, TextColor, LocalizedName, tostring(UnenchantedValue))
+			elseif UHolynenchantedValue and UnenchantedValue > 0 then
+				TooltiHolypText = format(PawnUnenchantedAnnotationFormat, TextColor, LocalizedName, tostring(UnenchantedValue))
 			end
 
 			-- Add info to the tooltip if this item is an upgrade or best-in-slot.
@@ -269,40 +295,90 @@ end
 
 
 function SniperPawnScaleProvider_AddScales()
+  local prov = ScaleProviderName
 
-    SniperPawnDump('addonTable', AddonTable)
+  -- Warrior : Arms
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 1, AddonTable.warrior["Arms"], nil, AddonTable.warrior['colour'] )
+  -- Warrior : Fury
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 2, AddonTable.warrior["Fury"], nil, AddonTable.warrior['colour'] )
+  -- Warrior : Protection
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 3, AddonTable.warrior["Protection"], nil, AddonTable.warrior['colour'] )
 
-    -- Rogue: Combat
-    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 4, 2, AddonTable.rogue["Combat"], nil, AddonTable.rogue['colour'] )
+  -- Paladin : Holy
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 1, AddonTable.paladin["Holy"], nil, AddonTable.paladin['colour'] )
+  -- Paladin : Protection
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 2, AddonTable.paladin["Protection"], nil, AddonTable.paladin['colour'] )
+  -- Paladin : Retribution
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 3, AddonTable.paladin["Retribution"], nil, AddonTable.paladin['colour'] )
 
-    -- Paladin: Holy
-    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 2, 1, AddonTable.paladin["Holy"], nil, AddonTable.paladin['colour'] )
+  -- Hunter : Beast Mastery
+  SniperPawnAddPluginScaleFromTemplate( prov, 3, 1, AddonTable.hunter["Beast Mastery"], nil, AddonTable.hunter['colour'] )
+  -- Hunter : Marksmanship
+  SniperPawnAddPluginScaleFromTemplate( prov, 3, 2, AddonTable.hunter["Marksmanship"], nil, AddonTable.hunter['colour'] )
+  -- Hunter : Survival
+  SniperPawnAddPluginScaleFromTemplate( prov, 3, 3, AddonTable.hunter["Survival"], nil, AddonTable.hunter['colour'] )
 
-    -- Warrior: Protection
-    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 1, 1, AddonTable.warrior["Protection"], nil, AddonTable.warrior['colour'] )
+  -- Rogue : Assassination
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 1, AddonTable.rogue["Assassination"], nil, AddonTable.rogue['colour'] )
+  -- Rogue : Combat
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 2, AddonTable.rogue["Combat"], nil, AddonTable.rogue['colour'] )
+  -- Rogue : Subtelty
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 3, AddonTable.rogue["Subtelty"], nil, AddonTable.rogue['colour'] )
 
-    -- Hunter: Marksmanship
-    SniperPawnAddPluginScaleFromTemplate( ScaleProviderName, 3, 2, AddonTable.hunter["Marksmanship"], nil, AddonTable.hunter['colour'] )
+  -- Priest : Discipline
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 1, AddonTable.priest["Discipline"], nil, AddonTable.priest['colour'] )
+  -- Priest : Holy
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 2, AddonTable.priest["Holy"], nil, AddonTable.priest['colour'] )
+  -- Priest : Shadow
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 3, AddonTable.priest["Shadow"], nil, AddonTable.priest['colour'] )
 
-    ------------------------------------------------------------
+  -- Shaman : Discipline
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 1, AddonTable.shaman["Elemental"], nil, AddonTable.shaman['colour'] )
+  -- Shaman : Holy
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 2, AddonTable.shaman["Enhancement"], nil, AddonTable.shaman['colour'] )
+  -- Shaman : Shadow
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 3, AddonTable.shaman["Restoration"], nil, AddonTable.shaman['colour'] )
 
-    -- PawnMrRobotScaleProviderOptions.LastAdded keeps track of the last time that we tried to automatically enable scales for this character.
-    if not PawnMrRobotScaleProviderOptions then PawnMrRobotScaleProviderOptions = { } end
-    if not PawnMrRobotScaleProviderOptions.LastAdded then PawnMrRobotScaleProviderOptions.LastAdded = 0 end
+  -- Mage : Arcane
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 1, AddonTable.mage["Arcane"], nil, AddonTable.mage['colour'] )
+  -- Mage : Fire
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 2, AddonTable.mage["Fire"], nil, AddonTable.mage['colour'] )
+  -- Mage : Frost
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 3, AddonTable.mage["Frost"], nil, AddonTable.mage['colour'] )
 
-    local _, Class = UnitClass("player")
-    if PawnMrRobotScaleProviderOptions.LastClass ~= nil and Class ~= PawnMrRobotScaleProviderOptions.LastClass then
-        -- If the character has changed class since last time, let's start over.
-        PawnSetAllScaleProviderScalesVisible(ScaleProviderName, false)
-        PawnMrRobotScaleProviderOptions.LastAdded = 0
-    end
-    PawnMrRobotScaleProviderOptions.LastClass = Class
+  -- Warlock : Affliction
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 1, AddonTable.warlock["Arcane"], nil, AddonTable.warlock['colour'] )
+  -- Warlock : Demonology
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 2, AddonTable.warlock["Fire"], nil, AddonTable.warlock['colour'] )
+  -- Warlock : Destruction
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 3, AddonTable.warlock["Frost"], nil, AddonTable.warlock['colour'] )
 
-    -- These scales are new, and we don't need any upgrade logic yet.
-    PawnMrRobotScaleProviderOptions.LastAdded = 1
+  -- Druid : Balance
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 1, AddonTable.druid["Balance"], nil, AddonTable.druid['colour'] )
+  -- Druid : Feral
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 2, AddonTable.druid["Feral Combat"], nil, AddonTable.druid['colour'] )
+  -- Druid : Restoration
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 3, AddonTable.druid["Restoration"], nil, AddonTable.druid['colour'] )
 
-    -- After this function terminates there's no need for it anymore, so cause it to self-destruct to save memory.
-    PawnMrRobotScaleProvider_AddScales = nil
+  ------------------------------------------------------------
+
+  -- PawnMrRobotScaleProviderOptions.LastAdded keeps track of the last time that we tried to automatically enable scales for this character.
+  if not PawnMrRobotScaleProviderOptions then PawnMrRobotScaleProviderOptions = { } end
+  if not PawnMrRobotScaleProviderOptions.LastAdded then PawnMrRobotScaleProviderOptions.LastAdded = 0 end
+
+  local _, Class = UnitClass("player")
+  if PawnMrRobotScaleProviderOptions.LastClass ~= nil and Class ~= PawnMrRobotScaleProviderOptions.LastClass then
+      -- If the character has changed class since last time, let's start over.
+      PawnSetAllScaleProviderScalesVisible(ScaleProviderName, false)
+      PawnMrRobotScaleProviderOptions.LastAdded = 0
+  end
+  PawnMrRobotScaleProviderOptions.LastClass = Class
+
+  -- These scales are new, and we don't need any upgrade logic yet.
+  PawnMrRobotScaleProviderOptions.LastAdded = 1
+
+  -- After this function terminates there's no need for it anymore, so cause it to self-destruct to save memory.
+  PawnMrRobotScaleProvider_AddScales = nil
 
 end -- PawnMrRobotScaleProvider_AddScales
 

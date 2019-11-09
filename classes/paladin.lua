@@ -1,10 +1,10 @@
 local AddonName, AddonTable = ...
 
 AddonTable.paladin = {
-  ["colour"] = 'f58cba', -- TODO: Correct the colour
+  ["colour"] = 'f58cba',
   -- Tanking
   ["Protection"] = {
-    Armor=0.1,
+    Armor=0.02,
     Agility=1,
     CritRating=1,
     AttackPower=2,
@@ -29,15 +29,13 @@ AddonTable.paladin = {
   -- DPS
   ["Retribution"] = {
     Armor=0.01,
-    Agility=1,
-    CritRating=1,
-    AttackPower=2,
+    Agility=0.5,
+    CritRating=4,
+    AttackPower=16,
     Hit=10,
     Stamina=6,
-    Strength=4,
+    Strength=8,
     Defense=2,
-    Dodge=1,
-    Parry=1,
     Hp5=4
   }
 }
