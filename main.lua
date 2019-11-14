@@ -212,7 +212,6 @@ function PawnAddValuesToTooltip(Tooltip, ItemValues, UpgradeInfo, BestItemFor, S
 		local ScaleName, Value, UnenchantedValue, LocalizedName = Entry[1], Entry[2], Entry[3], Entry[4]
 		local Scale = PawnCommon.Scales[ScaleName]
 		VgerCore.Assert(Scale ~= nil, "Scale name in item value list doesn't exist!")
-		
 		if PawnIsScaleVisible(ScaleName) then
 			-- Ignore values that we don't want to display.
 			if OnlyFirstValue then
@@ -347,11 +346,11 @@ function SniperPawnScaleProvider_AddScales()
   SniperPawnAddPluginScaleFromTemplate( prov, 8, 3, AddonTable.mage["Frost"], nil, AddonTable.mage['colour'] )
 
   -- Warlock : Affliction
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 1, AddonTable.warlock["Arcane"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 1, AddonTable.warlock["Affliction"], nil, AddonTable.warlock['colour'] )
   -- Warlock : Demonology
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 2, AddonTable.warlock["Fire"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 2, AddonTable.warlock["Demonology"], nil, AddonTable.warlock['colour'] )
   -- Warlock : Destruction
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 3, AddonTable.warlock["Frost"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 3, AddonTable.warlock["Destruction"], nil, AddonTable.warlock['colour'] )
 
   -- Druid : Balance
   SniperPawnAddPluginScaleFromTemplate( prov, 11, 1, AddonTable.druid["Balance"], nil, AddonTable.druid['colour'] )

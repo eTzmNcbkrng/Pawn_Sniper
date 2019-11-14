@@ -25,7 +25,7 @@ AddonTable.druid = {
   ["Restoration"] = {
     Intellect=16,
     SpellCritRating=4,
-    Hit=10,
+    SpellHit=10,
     Mp5=8,
     Stamina=1
   }
