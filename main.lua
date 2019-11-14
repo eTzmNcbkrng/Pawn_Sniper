@@ -331,11 +331,11 @@ function SniperPawnScaleProvider_AddScales()
   -- Priest : Shadow
   SniperPawnAddPluginScaleFromTemplate( prov, 5, 3, AddonTable.priest["Shadow"], nil, AddonTable.priest['colour'] )
 
-  -- Shaman : Discipline
+  -- Shaman : Elemental
   SniperPawnAddPluginScaleFromTemplate( prov, 7, 1, AddonTable.shaman["Elemental"], nil, AddonTable.shaman['colour'] )
-  -- Shaman : Holy
+  -- Shaman : Enhancement
   SniperPawnAddPluginScaleFromTemplate( prov, 7, 2, AddonTable.shaman["Enhancement"], nil, AddonTable.shaman['colour'] )
-  -- Shaman : Shadow
+  -- Shaman : Restoration
   SniperPawnAddPluginScaleFromTemplate( prov, 7, 3, AddonTable.shaman["Restoration"], nil, AddonTable.shaman['colour'] )
 
   -- Mage : Arcane
