@@ -150,21 +150,28 @@ function SniperPawnGetStatValuesForTemplate(Template, NoStats)
 end
 
 -- Adds a plugin scale from Pawn, starting from one of Pawn's existing templates.
-function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, SpecID, Stats, NormalizationFactor, Color)
-	if not PawnScaleProviders[ProviderInternalName] then
-		VgerCore.Fail("A scale provider with that name is not registered.  Use PawnAddPluginScaleProvider first.")
-		return
-	end
+function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, SpecID, Stats, Color, specName)
+  if not PawnScaleProviders[ProviderInternalName] then
+    VgerCore.Fail("A scale provider with that name is not registered.  Use PawnAddPluginScaleProvider first.")
+    return
+  end
 
-	if not PawnCommon then VgerCore.Fail("Can't add plugin scales until Pawn starts to initialize.") return end
+  if not PawnCommon then VgerCore.Fail("Can't add plugin scales until Pawn starts to initialize.") return end
 
-    local clId = tonumber(ClassID)
+  local clId = tonumber(ClassID)
 
-    local className = SniperUnitClasses[tonumber(ClassID)]['name']
-    local specName = SniperUnitClasses[tonumber(ClassID)]['spec'][tonumber(SpecID)]
+  local scaleName = ''
 
-	local Template = PawnFindScaleTemplate(ClassID, SpecID)
-	if not Template then VgerCore.Fail("Can't add this plugin scale because the class" .. tostring(className) .. " ID " .. tostring(ClassID) .. " and/or spec " .. tostring(LocalizedSpecName) .. " ID " .. tostring(SpecID) .. " wasn't found.") return end
+  local className = SniperUnitClasses[tonumber(ClassID)]['name']
+  if not specName then
+    specName = SniperUnitClasses[tonumber(ClassID)]['spec'][tonumber(SpecID)]
+    scaleName = className .. ": " .. specName
+  else
+    scaleName = specName .. " (Sniper)"
+  end
+
+  local Template = PawnFindScaleTemplate(ClassID, SpecID)
+  if not Template then VgerCore.Fail("Can't add this plugin scale because the class" .. tostring(className) .. " ID " .. tostring(ClassID) .. " and/or spec " .. tostring(LocalizedSpecName) .. " ID " .. tostring(SpecID) .. " wasn't found.") return end
 
 	-- Build up the values table.
 	local ScaleValues = SniperPawnGetStatValuesForTemplate(Template)
@@ -180,10 +187,10 @@ function SniperPawnAddPluginScaleFromTemplate(ProviderInternalName, ClassID, Spe
 	PawnAddPluginScale(
 		ProviderInternalName,
 		ScaleInternalName,
-		className .. ": " .. specName, -- LocalizedScaleName
+		scaleName, -- LocalizedScaleName
 		Color,
 		ScaleValues,
-		NormalizationFactor,
+		nil,
 		Template.HideUpgrades
 	)
 
@@ -297,67 +304,63 @@ function SniperPawnScaleProvider_AddScales()
   local prov = ScaleProviderName
 
   -- Warrior : Arms
-  SniperPawnAddPluginScaleFromTemplate( prov, 1, 1, AddonTable.warrior["Arms"], nil, AddonTable.warrior['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 1, AddonTable.warrior["Arms"], AddonTable.warrior['colour'] )
   -- Warrior : Fury
-  SniperPawnAddPluginScaleFromTemplate( prov, 1, 2, AddonTable.warrior["Fury"], nil, AddonTable.warrior['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 2, AddonTable.warrior["Fury"], AddonTable.warrior['colour'] )
   -- Warrior : Protection
-  SniperPawnAddPluginScaleFromTemplate( prov, 1, 3, AddonTable.warrior["Protection"], nil, AddonTable.warrior['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 1, 3, AddonTable.warrior["Protection"], AddonTable.warrior['colour'] )
 
   -- Paladin : Holy
-  SniperPawnAddPluginScaleFromTemplate( prov, 2, 1, AddonTable.paladin["Holy"], nil, AddonTable.paladin['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 1, AddonTable.paladin["Holy"], AddonTable.paladin['colour'] )
   -- Paladin : Protection
-  SniperPawnAddPluginScaleFromTemplate( prov, 2, 2, AddonTable.paladin["Protection"], nil, AddonTable.paladin['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 2, AddonTable.paladin["Protection"], AddonTable.paladin['colour'] )
   -- Paladin : Retribution
-  SniperPawnAddPluginScaleFromTemplate( prov, 2, 3, AddonTable.paladin["Retribution"], nil, AddonTable.paladin['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 2, 3, AddonTable.paladin["Retribution"], AddonTable.paladin['colour'] )
 
-  -- Hunter : Beast Mastery
-  SniperPawnAddPluginScaleFromTemplate( prov, 3, 1, AddonTable.hunter["Beast Mastery"], nil, AddonTable.hunter['colour'] )
-  -- Hunter : Marksmanship
-  SniperPawnAddPluginScaleFromTemplate( prov, 3, 2, AddonTable.hunter["Marksmanship"], nil, AddonTable.hunter['colour'] )
-  -- Hunter : Survival
-  SniperPawnAddPluginScaleFromTemplate( prov, 3, 3, AddonTable.hunter["Survival"], nil, AddonTable.hunter['colour'] )
+  -- Hunter
+  SniperPawnAddPluginScaleFromTemplate( prov, 3, 1, AddonTable.hunter["Weights"], AddonTable.hunter['colour'], 'Hunter' )
 
   -- Rogue : Assassination
-  SniperPawnAddPluginScaleFromTemplate( prov, 4, 1, AddonTable.rogue["Assassination"], nil, AddonTable.rogue['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 1, AddonTable.rogue["Assassination"], AddonTable.rogue['colour'] )
   -- Rogue : Combat
-  SniperPawnAddPluginScaleFromTemplate( prov, 4, 2, AddonTable.rogue["Combat"], nil, AddonTable.rogue['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 2, AddonTable.rogue["Combat"], AddonTable.rogue['colour'] )
   -- Rogue : Subtelty
-  SniperPawnAddPluginScaleFromTemplate( prov, 4, 3, AddonTable.rogue["Subtelty"], nil, AddonTable.rogue['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 4, 3, AddonTable.rogue["Subtelty"], AddonTable.rogue['colour'] )
 
   -- Priest : Discipline
-  SniperPawnAddPluginScaleFromTemplate( prov, 5, 1, AddonTable.priest["Discipline"], nil, AddonTable.priest['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 1, AddonTable.priest["Discipline"], AddonTable.priest['colour'] )
   -- Priest : Holy
-  SniperPawnAddPluginScaleFromTemplate( prov, 5, 2, AddonTable.priest["Holy"], nil, AddonTable.priest['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 2, AddonTable.priest["Holy"], AddonTable.priest['colour'] )
   -- Priest : Shadow
-  SniperPawnAddPluginScaleFromTemplate( prov, 5, 3, AddonTable.priest["Shadow"], nil, AddonTable.priest['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 5, 3, AddonTable.priest["Shadow"], AddonTable.priest['colour'] )
 
   -- Shaman : Elemental
-  SniperPawnAddPluginScaleFromTemplate( prov, 7, 1, AddonTable.shaman["Elemental"], nil, AddonTable.shaman['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 1, AddonTable.shaman["Elemental"], AddonTable.shaman['colour'] )
   -- Shaman : Enhancement
-  SniperPawnAddPluginScaleFromTemplate( prov, 7, 2, AddonTable.shaman["Enhancement"], nil, AddonTable.shaman['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 2, AddonTable.shaman["Enhancement"], AddonTable.shaman['colour'] )
   -- Shaman : Restoration
-  SniperPawnAddPluginScaleFromTemplate( prov, 7, 3, AddonTable.shaman["Restoration"], nil, AddonTable.shaman['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 7, 3, AddonTable.shaman["Restoration"], AddonTable.shaman['colour'] )
 
   -- Mage : Arcane
-  SniperPawnAddPluginScaleFromTemplate( prov, 8, 1, AddonTable.mage["Arcane"], nil, AddonTable.mage['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 1, AddonTable.mage["Arcane"], AddonTable.mage['colour'] )
   -- Mage : Fire
-  SniperPawnAddPluginScaleFromTemplate( prov, 8, 2, AddonTable.mage["Fire"], nil, AddonTable.mage['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 2, AddonTable.mage["Fire"], AddonTable.mage['colour'] )
   -- Mage : Frost
-  SniperPawnAddPluginScaleFromTemplate( prov, 8, 3, AddonTable.mage["Frost"], nil, AddonTable.mage['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 8, 3, AddonTable.mage["Frost"], AddonTable.mage['colour'] )
 
   -- Warlock : Affliction
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 1, AddonTable.warlock["Affliction"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 1, AddonTable.warlock["Affliction"], AddonTable.warlock['colour'] )
   -- Warlock : Demonology
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 2, AddonTable.warlock["Demonology"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 2, AddonTable.warlock["Demonology"], AddonTable.warlock['colour'] )
   -- Warlock : Destruction
-  SniperPawnAddPluginScaleFromTemplate( prov, 9, 3, AddonTable.warlock["Destruction"], nil, AddonTable.warlock['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 9, 3, AddonTable.warlock["Destruction"], AddonTable.warlock['colour'] )
 
   -- Druid : Balance
-  SniperPawnAddPluginScaleFromTemplate( prov, 11, 1, AddonTable.druid["Balance"], nil, AddonTable.druid['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 1, AddonTable.druid["Balance"], AddonTable.druid['colour'] )
   -- Druid : Feral
-  SniperPawnAddPluginScaleFromTemplate( prov, 11, 2, AddonTable.druid["Feral Combat"], nil, AddonTable.druid['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 2, AddonTable.druid["Feral Combat"], AddonTable.druid['colour'] )
   -- Druid : Restoration
-  SniperPawnAddPluginScaleFromTemplate( prov, 11, 3, AddonTable.druid["Restoration"], nil, AddonTable.druid['colour'] )
+  SniperPawnAddPluginScaleFromTemplate( prov, 11, 3, AddonTable.druid["Restoration"], AddonTable.druid['colour'] )
 
   ------------------------------------------------------------
 
