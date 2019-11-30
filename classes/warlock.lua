@@ -2,11 +2,13 @@ local AddonName, AddonTable = ...
 
 local WarlockArmor=0.01
 local WarlockSpellCritRating=4
-local WarlockStamina=1.0
-local WarlockSpirit=2
-local WarlockIntellect=16
-local WarlockMp5=8
-local WarlockWeaponDamage=0.1
+local WarlockStamina=0.5
+local WarlockSpirit=0.5
+local WarlockIntellect=8
+local WarlockMp5=2
+local WarlockWeaponDamage=2
+local WarlockShadowDamage=2
+local WarlockFireDamage=1
 
 
 AddonTable.warlock = {
@@ -18,7 +20,9 @@ AddonTable.warlock = {
     Spirit=WarlockSpirit,
     Intellect=WarlockIntellect,
     Mp5=WarlockMp5,
-    RangedDps=WarlockWeaponDamage
+    RangedDps=WarlockWeaponDamage,
+    ShadowSpellDamage=WarlockShadowDamage,
+    FireSpellDamage=WarlockFireDamage
   },
   ["Demonology"] = {
     Armor=WarlockArmor,
@@ -27,7 +31,9 @@ AddonTable.warlock = {
     Spirit=WarlockSpirit,
     Intellect=WarlockIntellect,
     Mp5=WarlockMp5,
-    RangedDps=WarlockWeaponDamage
+    RangedDps=WarlockWeaponDamage,
+    ShadowSpellDamage=WarlockShadowDamage,
+    FireSpellDamage=WarlockFireDamage
   },
   ["Destruction"] = {
     Armor=WarlockArmor,
@@ -36,6 +42,8 @@ AddonTable.warlock = {
     Spirit=WarlockSpirit,
     Intellect=WarlockIntellect,
     Mp5=WarlockMp5,
-    RangedDps=WarlockWeaponDamage
+    RangedDps=WarlockWeaponDamage,
+    ShadowSpellDamage=WarlockShadowDamage,
+    FireSpellDamage=2
   }
 }

@@ -1,9 +1,9 @@
 local AddonName, AddonTable = ...
 
 local PriestIntellect=16
-local PriestSpirit=4
-local PriestMp5=8
-local PriestHealing=32
+local PriestSpirit=8
+local PriestMp5=6
+local PriestHealing=24
 local PriestArmor=0.01
 local PriestStamina=1
 local PriestSpellCritRating=4
@@ -34,6 +34,7 @@ AddonTable.priest = {
     Stamina=PriestStamina,
     Spirit=PriestSpirit,
     Intellect=PriestIntellect,
-    Mp5=PriestMp5
+    Mp5=PriestMp5,
+    ShadowSpellDamage=32
   }
 }

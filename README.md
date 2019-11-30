@@ -22,3 +22,13 @@ Errors currently in pawn:
     Pawn\PawnUI.lua:285: in function <Pawn\PawnUI.lua:278>
     
 None of the above prevent the addon from working if encountered, I have Pawn_Sniper working in my own wow classic.
+
+## Stats
+
+Below is a list of some of the stats used by my weights and their internal names in Pawn.
+
+- `HitRating`
+- `CritRating`
+- `Ap` - Attack Power
+- `Agility`
+- `Rap` - Ranged Attack Power
